@@ -1,5 +1,5 @@
-@extends('layouts.app', ['activePage' => 'userDisplay', 'navName' => 'Country' ,'title' => 'toqeer abbas',
-'activeButton' => 'location'])
+@extends('layouts.app', ['activePage' => 'userDisplay', 'navName' => 'USers' ,'title' => 'toqeer abbas',
+'activeButton' => 'users'])
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -13,7 +13,7 @@
                         <div class="card-body">
                             <h6 class="card-title">Users</h6>
                             <p class="card-description">All the Users are listed here. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <a href="{{ route('country.create') }}"><button class="btn btn-primary">
+                                <a href="{{ route('userInfo.create') }}"><button class="btn btn-primary">
                                         Create</button></a>
                             </p>
 
@@ -45,7 +45,7 @@
                                              <th>
                                                 Address
                                               </th>
-                                            <th>
+                                            {{-- <th>
                                                 Organization
                                             </th>
                                             <th>
@@ -62,26 +62,34 @@
                                             </th>
                                             <th>
                                                 Area
-                                            </th>
+                                            </th> --}}
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($country as $key => $country)
+                                        @foreach ($userInfo as $key => $users)
                                             <tr>
                                                 <td>{{ ++$key }}</td>
-                                                <td>{{ $country->name }}</td>
-                                                <td>{{ $country->shortName }}</td>
-                                                <td>{{ $country->description }}</td>
+                                                <td>{{ $users->first_name }}   {{ $users->last_name}}</td>
+                                                <td>{{ $users->father_name }}</td>
+                                                <td>{{ $users->cnic }}</td>
+                                                <td>{{ $users->dob }}</td>
+                                                <td>{{ $users->email }}</td>
+                                             
+                                                <td>{{ $users->phone }}</td>
+                                                <td>{{ $users->address }}</td>
+                                                {{-- <td>{{ $users->account_id }}</td>
+                                                <td>{{ $users->organization_id }}</td>
+                                                <td>{{ $users->branch_id }}</td>
+                                                <td>{{ $users->country_id }}</td>
+                                                <td>{{ $users->state_id }}</td>
+                                                <td>{{ $users->city_id }}</td>
+                                                <td>{{ $users->area_id }}</td> --}}
+                                         
 
-                                                <td>
-                                                    {{ \Carbon\Carbon::parse($country->created_at)->diffForhumans() }}
-                                                </td>
-                                                <td>
-                                                    {{ \Carbon\Carbon::parse($country->updated_at)->diffForhumans() }}
-                                                </td>
+                                        
                                                 <td>
                                                     <form class="d-inline-block"
-                                                        action="{{ route('country.destroy', $country->id) }}"
+                                                        action="{{ route('userInfo.destroy', $users->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('DELETE')
@@ -92,7 +100,7 @@
                                                     </form>
 
                                                     <a style="margin-left : 5px; width: 100px; height:40px"
-                                                        href="{{ route('country.edit', $country->id) }}"
+                                                        href="{{ route('userInfo.edit', $users->id) }}"
                                                         class="btn btn-warning  ">
                                                         <i class="fa fa-pencil" aria-hidden="true"></i>
                                                         Edit

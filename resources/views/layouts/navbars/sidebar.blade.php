@@ -75,7 +75,7 @@ Tip 2: you can also add an image using data-image tag
     <div class="collapse @if($activeButton =='ManageUsers') show @endif" id="users">
         <ul class="nav">
             <li class="nav-item @if($activePage == 'user') active @endif">
-                <a class="nav-link" href="{{route('profile.edit')}}">
+                <a class="nav-link" href="{{route('userInfo.index')}}">
                      <p>{{ __("Manage Users") }}</p>
                 </a>
             </li>
@@ -125,14 +125,14 @@ Tip 2: you can also add an image using data-image tag
 </li>
 
 
- 
+<li class="nav-item @if($activePage == 'cards') active @endif">
+    <a class="nav-link" href="{{url('/card')}}">  
+        <i class="nc-icon nc-notes"></i>
+        <p>{{ __("Cards") }}</p>
+    </a>
+</li>
 {{-- 
-            <li class="nav-item @if($activePage == 'table') active @endif">
-                <a class="nav-link" href="{{route('page.index', 'table')}}">
-                    <i class="nc-icon nc-notes"></i>
-                    <p>{{ __("Cards") }}</p>
-                </a>
-            </li>
+           
             <li class="nav-item @if($activePage == 'typography') active @endif">
                 <a class="nav-link" href="{{route('page.index', 'typography')}}">
                     <i class="nc-icon nc-paper-2"></i>
