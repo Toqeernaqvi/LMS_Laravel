@@ -8,6 +8,7 @@ use App\Http\Controllers\organizationController;
 use App\Http\Controllers\branchController;
 use App\Http\Controllers\accountController;
 use App\Http\Controllers\cardController;
+use App\Http\Controllers\transactionController;
 use App\Http\Controllers\userInfoController;
 use App\Http\Requests\Location\country;
 use Illuminate\Support\Facades\Route;
@@ -74,6 +75,12 @@ Route::get('/card', function () {
     return view('pages.cards.card');
 })->middleware(['auth'])->name('card');
 
+Route::get('/transaction', function () {
+    return view('pages.transactions.transaction');
+})->middleware(['auth'])->name('transaction');
+
+  
+
 require __DIR__.'/auth.php';
 
  
@@ -126,3 +133,7 @@ Route::get('userInfo/getBranch/{id}', [ branchController::class,'getBranch' ]);
 
 //Cards
 Route::resource( 'card',  cardController::class);
+
+//Transactions
+Route::resource( 'transaction',  transactionController::class);
+Route::get('transaction/getUser/{id}', [transactionController::class,'getUser' ]);

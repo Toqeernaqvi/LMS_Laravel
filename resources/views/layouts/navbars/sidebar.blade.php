@@ -131,6 +131,13 @@ Tip 2: you can also add an image using data-image tag
         <p>{{ __("Cards") }}</p>
     </a>
 </li>
+
+<li class="nav-item @if($activePage == 'transactions') active @endif">
+    <a class="nav-link" href="{{url('/transaction')}}">
+        <i class="nc-icon nc-paper-2"></i>
+        <p>{{ __("Add Transactions") }}</p>
+    </a>
+</li>
 {{-- 
            
             <li class="nav-item @if($activePage == 'typography') active @endif">

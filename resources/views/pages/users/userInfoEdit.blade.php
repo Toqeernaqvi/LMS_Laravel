@@ -181,10 +181,16 @@
                                 @enderror
                             </div>
                             {{-- Password --}}
-                            <div class="form-group mt-5">
+                            <div class="form-group mt-5  
+                            "  id="show_hide_password">
                                 <label>Password :</label>
-                                <input type="password" class="form-control"  name="password" 
-                                    placeholder="Enter Password " value="{{ $user->password }}">
+                                <br>
+                                <input type="password" class="form-control d-inline col-11"   name="password"  
+                                    placeholder="Enter Password " value="{{ $user->password }}" >  
+                                    <div class="input-group-addon d-inline">
+                                        <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                      </div>
+
                                 @error('password')
                                     <div style="color: tomato">{{ $message }}</div>
                                 @enderror
@@ -223,7 +229,27 @@
      </div>
       {{-- Jquery Cdn --}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+    <style>
+        a, a:hover{
+  color:#333
+}
+    </style>
+<script>
+    $(document).ready(function() {
+    $("#show_hide_password a").on('click', function(event) {
+        event.preventDefault();
+        if($('#show_hide_password input').attr("type") == "text"){
+            $('#show_hide_password input').attr('type', 'password');
+            $('#show_hide_password i').addClass( "fa-eye-slash" );
+            $('#show_hide_password i').removeClass( "fa-eye" );
+        }else if($('#show_hide_password input').attr("type") == "password"){
+            $('#show_hide_password input').attr('type', 'text');
+            $('#show_hide_password i').removeClass( "fa-eye-slash" );
+            $('#show_hide_password i').addClass( "fa-eye" );
+        }
+    });
+});
+</script>
     <script type=text/javascript>
         //Country Dropdown Change
         $('#country').change(function() {

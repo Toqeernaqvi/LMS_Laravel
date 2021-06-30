@@ -1,8 +1,6 @@
-@extends('layouts.app', ['activePage' => 'stateDisplay', 'navName' => 'States' ,'title' => 'states',
+@extends('layouts.app', ['activePage' => 'cityDisplay', 'navName' => 'Cities' ,'title' => 'cities',
 'activeButton' => 'location'])
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+ 
 
 @section('content')
     <div class="content">
@@ -126,6 +124,7 @@
 
         <script type=text/javascript>
             $('#country').change(function() {
+                console.log("country click");
                 var countryID = $(this).val();
                 if (countryID) {
                     $.ajax({
@@ -181,15 +180,10 @@
                                     '</td><td>' +
                                     res[index].description +
                                     '</td>' +
-                                    '<td><form class="d-inline-block"action="' + urlDelete +
-                                    '" method="POST">@csrf @method('
-                                DELETE
-                                    ')<button type="submit" class="btn btn-danger btn-icon-text"> <i class="fa fa-trash-o" aria-hidden="true"></i> Delete </button> </form> <a style="margin-left : 5px; width: 100px; height:40px" href="' +
-                                    urlEdit +
-                                    '" class="btn btn-warning  "><i class="fa fa-pencil" aria-hidden="true"></i> Edit </a> </td>'
-
                                     +
-                                    '<tr>';
+                                    '<td><form class="d-inline-block"action="'+urlDelete +'" method="POST">@csrf @method('DELETE')<button type="submit" class="btn btn-danger btn-icon-text"> <i class="fa fa-trash-o" aria-hidden="true"></i> Delete </button> </form> <a style="margin-left : 5px; width: 100px; height:40px" href="'+urlEdit+'" class="btn btn-warning  "><i class="fa fa-pencil" aria-hidden="true"></i> Edit </a> </td>'
+                                    
+                                    +'<tr>';
                             });
 
 

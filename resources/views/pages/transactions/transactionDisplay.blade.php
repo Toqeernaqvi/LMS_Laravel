@@ -1,5 +1,5 @@
-@extends('layouts.app', ['activePage' => 'organizationDisplay', 'navName' => 'Organization' ,'title' => 'toqeer abbas',
-'activeButton' => 'organizations'])
+@extends('layouts.app', ['activePage' => 'transactionDisplay', 'navName' => 'transactions' ,'title' => 'transactions',
+'activeButton' => 'transactions'])
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -7,13 +7,16 @@
 @section('content')
     <div class="content">
         <div class="container">
+ 
+
             <div class="row">
                 <div class="col-md-12 grid-margin stretch-card">
                     <div class="card">
+
                         <div class="card-body">
-                            <h6 class="card-title">Cards</h6>
-                            <p class="card-description">All the cards are listed here. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <a href="{{ route('card.create') }}"><button class="btn btn-primary">
+                            <h6 class="card-title">Transactions</h6>
+                            <p class="card-description">All the transactions are listed here. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="{{ route('transaction.create') }}"><button class="btn btn-primary">
                                         Create</button></a>
                             </p>
 
@@ -25,22 +28,19 @@
                                                 #
                                             </th>
                                             <th>
-                                               Title
+                                                UserName
                                             </th>
                                             <th>
-                                                ShortName
+                                                CardType
+                                            </th>
+                                            <th>
+                                                Net Amount
+                                            </th>
+                                            <th>
+                                                Earn Points
                                             </th>
                                             <th>
                                                 Description
-                                            </th>
-                                            <th>
-                                                Joining Bonus
-                                            </th>
-                                            <th>
-                                                Minimum Bonus
-                                            </th>
-                                            <th>
-                                                Validaty
                                             </th>
                                             {{-- <th>
                                                 Created At
@@ -53,27 +53,26 @@
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        @foreach ($card as $key => $card)
+                                    <tbody id="content">
+                                        @foreach ($tran as $key => $transaction)
                                             <tr>
                                                 <td>{{ ++$key }}</td>
-                                                <td>{{ $card->title }}</td>
-                                                <td>{{ $card->shortName }}</td>
-                                                <td>{{ $card->description }}</td>
-                                                <td>{{ $card->joining_bonus }}</td>
-                                                <td>{{ $card->minimum_bonus }}</td>
-                                                <td>{{ $card->validaty }}</td>
+                                                {{-- <td>{{route('transaction/getUser/'[$transaction->user_id] ) }} </td> --}}
+                                                <td>{{ $transaction->first_name }}</td>
+                                                <td>{{ $transaction->title }}</td>
+                                                <td>{{ $transaction->net_amount }}</td>
+                                                <td>{{ $transaction->earn_points }}</td>
+                                                <td>{{ $transaction->description }}</td>
 
                                                 {{-- <td>
-                                                    {{ \Carbon\Carbon::parse($organization->created_at)->diffForhumans() }}
+                                                    {{ \Carbon\Carbon::parse($state->created_at)->diffForhumans() }}
                                                 </td>
                                                 <td>
-                                                    {{ \Carbon\Carbon::parse($organization->updated_at)->diffForhumans() }}
+                                                    {{ \Carbon\Carbon::parse($state->updated_at)->diffForhumans() }}
                                                 </td> --}}
                                                 <td>
                                                     <form class="d-inline-block"
-                                                        action="{{ route('card.destroy', $card->id) }}"
-                                                        method="POST">
+                                                        action="{{ route('transaction.destroy', $transaction->id) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-danger btn-icon-text">
@@ -83,7 +82,7 @@
                                                     </form>
 
                                                     <a style="margin-left : 5px; width: 100px; height:40px"
-                                                        href="{{ route('card.edit', $card->id) }}"
+                                                        href="{{ route('transaction.edit', $transaction->id) }}"
                                                         class="btn btn-warning  ">
                                                         <i class="fa fa-pencil" aria-hidden="true"></i>
                                                         Edit
@@ -103,5 +102,10 @@
 
             </div>
         </div>
-    </div>
-@endsection
+
+        {{-- Jquery Cdn --}}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        
+
+    @endsection
