@@ -10,6 +10,8 @@ use App\Http\Controllers\accountController;
 use App\Http\Controllers\cardController;
 use App\Http\Controllers\transactionController;
 use App\Http\Controllers\userInfoController;
+use App\Http\Controllers\rewardController;
+
 use App\Http\Requests\Location\country;
 use Illuminate\Support\Facades\Route;
 
@@ -79,7 +81,10 @@ Route::get('/transaction', function () {
     return view('pages.transactions.transaction');
 })->middleware(['auth'])->name('transaction');
 
-  
+Route::get('/reward', function () {
+    return view('pages.rewards.reward');
+})->middleware(['auth'])->name('reward');
+
 
 require __DIR__.'/auth.php';
 
@@ -137,3 +142,8 @@ Route::resource( 'card',  cardController::class);
 //Transactions
 Route::resource( 'transaction',  transactionController::class);
 Route::get('transaction/getUser/{id}', [transactionController::class,'getUser' ]);
+
+//Rewards
+Route::resource( 'reward',  rewardController::class);
+
+ 
