@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Country;
 use Illuminate\Http\Request;
 use App\Http\Requests\Location\countryRequest;
-
+  
 class countryController extends Controller
 {
 

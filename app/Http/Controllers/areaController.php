@@ -106,6 +106,8 @@ class areaController extends Controller
             $area = new Area;
             $area->country_id = $request->country_id;
            $area->state_id = $request->state_id;
+           $area->city_id = $request->city_id;
+
            $area->name = $request->name;
            $area->shortName = $request->shortName;
            $area->description = $request->Description;
