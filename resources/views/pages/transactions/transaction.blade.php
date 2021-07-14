@@ -39,7 +39,7 @@
                             <div class="form-group">
                                 <label for="EarnPoints">Earn Points :</label>
                                 <input type="number" class="form-control" id="earn_points" name="earn_points"
-                                    placeholder="Earn Points ">
+                                    placeholder="Earn Points " readonly>
                             </div>
 
                             <div class="form-group">
@@ -53,11 +53,7 @@
                         </form>
                     </div>
 
-                    <!-- Optional JavaScript -->
-                    <!-- jQuery first, then Popper.js, then Bootstrap JS 5 -->
-                    <script src="js/bootstrap.js"></script>
-                    <script src="js/bootstrap.bundle.js"></script>
-
+             
 
                 </body>
 
@@ -66,4 +62,28 @@
             </div>
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <script>
+        $('input').keyup(function(){
+  var card = $("#card_id").val();
+  var  amount = Number($("#net_amount").val());
+  if(card==1){
+      var res =  amount/100;
+      var ans = res*10;
+  }
+  if(card==2){
+      var res =  amount/100;
+      var ans = res*20;
+  }
+  if(card==3){
+      var res =  amount/100;
+      var ans = res*30;
+  }
+  var earn_points = ans;
+  $("#earn_points").val(earn_points);
+
+ 
+})
+    </script>
 @endsection

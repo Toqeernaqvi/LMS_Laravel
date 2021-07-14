@@ -10,15 +10,17 @@ use App\Models\Country;
 use App\Models\Organization;
 use App\Models\State;
 use App\Models\UserInfo;
+use App\Models\User;
+
 use Illuminate\Http\Request;
 
 class userInfoController extends Controller
 {
-    public function index(UserInfo $model)
+    public function index(User $model)
     {
         // return view('pages.users.user', ['countries' => $model->paginate(15)]);
         try {
-            $userInfo = UserInfo::where('flag', '1')->get();
+            $userInfo = User::where('flag', '1')->get();
             $country = Country::where('flag', '1')->get();
             $state = State::where('flag', '1')->get();
             $city = City::where('flag', '1')->get();
@@ -32,9 +34,9 @@ class userInfoController extends Controller
         }
     }
 
-    public function create(UserInfo $model)
+    public function create(User $model)
     {
-        $userInfo = UserInfo::where('flag', '1')->get();
+        $userInfo = User::where('flag', '1')->get();
         $country = Country::where('flag', '1')->get();
         $state = State::where('flag', '1')->get();
         $city = City::where('flag', '1')->get();
@@ -49,7 +51,7 @@ class userInfoController extends Controller
     public function getAllCountries()
     {
         // logic to get all students
-        $users = UserInfo::where('flag', '1')->get()->toJson(JSON_PRETTY_PRINT);
+        $users = User::where('flag', '1')->get()->toJson(JSON_PRETTY_PRINT);
         return response($users, 200);
     }
 
@@ -59,9 +61,10 @@ class userInfoController extends Controller
         try {
             $user = $request->all();
 
-            $user = new UserInfo;
+            $user = new User;
             $user->first_name= $request->first_name;
             $user->last_name= $request->last_name;
+            $user->name = $request->first_name . " ".$request->last_name;
             $user->father_name= $request->father_name;
             $user->cnic= $request->cnic;
             $user->dob= $request->dob;
@@ -80,7 +83,7 @@ class userInfoController extends Controller
             $user->status = 'Active';
             $user->flag =  '1';
             $user->save();
-            return redirect()->route('userInfo.index')->with('success', 'UserInfo created successfully');
+            return redirect()->route('userInfo.index')->with('success', 'User created successfully');
         } catch (\Exception $e) {
             return $e->getMessage();
         }
@@ -89,14 +92,14 @@ class userInfoController extends Controller
     public function show($id)
     {
       //  logic to get a user here 
-        if (UserInfo::where('id', $id)->where('flag', '1')->exists()) {
-            $userInfo = UserInfo::where('id', $id)->get();
+        if (User::where('id', $id)->where('flag', '1')->exists()) {
+            $userInfo = User::where('id', $id)->get();
             return response($userInfo, 200);
 
 
         } else {
             return response()->json([
-                "message" => "UserInfo not found"
+                "message" => "User not found"
             ], 404);
         }
     }
@@ -111,8 +114,8 @@ class userInfoController extends Controller
         $account = Account::where('flag', '1')->get();
         $organization = Organization::where('flag', '1')->get();
         $branch = Branch::where('flag', '1')->get();
-        if (UserInfo::where('id', $id)->exists()) {
-            $user = UserInfo::find($id);
+        if (User::where('id', $id)->exists()) {
+            $user = User::find($id);
             return view('pages.users.userInfoEdit', compact('user','country','state','city','area','account','organization','branch'));
         }
     }
@@ -122,8 +125,8 @@ class userInfoController extends Controller
         //logic to update a userInfo from here.
 
 
-        if (UserInfo::where('id', $id)->exists()) {
-            $user  = UserInfo::find($id);
+        if (User::where('id', $id)->exists()) {
+            $user  = User::find($id);
          
             $user->first_name=    is_null($request->first_name) ? $user->first_name : $request->first_name;
             $user->last_name= is_null($request->last_name)? $user->last_name :$request->last_name ;
@@ -156,9 +159,9 @@ class userInfoController extends Controller
     {
         //logic to delete a userInfo 
 
-        if (UserInfo::where('id', $id)->exists()) {
+        if (User::where('id', $id)->exists()) {
 
-            $userInfo = UserInfo::find($id);
+            $userInfo = User::find($id);
 
             $userInfo->flag = 0;
 

@@ -5,7 +5,7 @@
 
  Product Page: https://www.creative-tim.com/product/light-bootstrap-dashboard
  Copyright 2019 Creative Tim (https://www.creative-tim.com) & Updivision (https://www.updivision.com)
- Licensed under MIT (https://github.com/creativetimofficial/light-bootstrap-dashboard/blob/master/LICENSE)
+ Licensed under MIT (https://github.com/toqeerofficial/light-bootstrap-dashboard/blob/master/LICENSE)
 
  Coded by Creative Tim & Updivision
 
@@ -112,7 +112,7 @@
           enableCounter: false,
           buttons: {
             twitter: {
-              via: 'CreativeTim'
+              via: 'toqeer'
             }
           },
           click: function(api, options) {

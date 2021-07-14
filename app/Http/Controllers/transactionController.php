@@ -5,51 +5,48 @@ namespace App\Http\Controllers;
 use App\Models\card;
 use App\Models\transaction;
 use App\Models\User;
-use App\Models\UserInfo;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\DB as FacadesDB;
 
 class transactionController extends Controller
 {
-    
+
     public function index(transaction $model)
     {
         // return view('pages.transactions.country', ['countries' => $model->paginate(15)]);
         try {
-            
-            $user = UserInfo::join('transactions', 'users_info.id', '=', 'transactions.user_id') ->get(['first_name']);
-            
-            $card = card::where('flag', '1')->get();
+
+            // $user = User::join('transactions', 'users.id', '=', 'transactions.user_id')->get(['name']);
+
+            // $card = card::where('flag', '1')->get();
 
             $tran =  FacadesDB::table('transactions')
-            ->join('users_info', 'users_info.id', '=', 'transactions.user_id')
-            ->join('cards', 'cards.id', '=', 'transactions.user_id')
-            ->select('transactions.*', 'users_info.first_name' , 'cards.title')
-            ->where([
-                'transactions.flag' => '1'
-            ])->get();
-           
-            $transaction = transaction::where([
-                'flag' => '1'
-            ])->get();
-            return view('pages.transactions.transactionDisplay', compact('user', 'card','tran'));
+                ->join('users', 'users.id', '=', 'transactions.user_id')
+                //  ->join('cards', 'cards.id', '=', 'transactions.user_id')
+                ->select('transactions.*', 'users.name')
+                ->where([
+                    'transactions.flag' => '1'
+                ])->get();
+
+
+            return view('pages.transactions.transactionDisplay', compact( 'tran'));
         } catch (\Exception $e) {
             return $e->getMessage();
         }
     }
- public function getUser($id){
-    $user = UserInfo::join('transactions', 'users_info.id', '=', $id) ->get(['first_name']);
-    return view('pages.transactions.transactionDisplay', compact('user'));
-
- }
+    public function getUser($id)
+    {
+        $user = User::join('transactions', 'users_info.id', '=', $id)->get(['first_name']);
+        return view('pages.transactions.transactionDisplay', compact('user'));
+    }
     public function show($id)
     {
         //  logic to get a country here 
         if (transaction::where('id', $id)->where('flag', '1')->exists()) {
-            $user = UserInfo::where('flag', '1')->get();
+            $user = User::where('flag', '1')->get();
             $card = card::where('flag', '1')->get();
-            return view('pages.transactions.transactionDisplay', compact('user', 'card','transaction'));
+            return view('pages.transactions.transactionDisplay', compact('user', 'card', 'transaction'));
         } else {
             return response()->json([
                 "message" => "Transaction not found"
@@ -59,11 +56,10 @@ class transactionController extends Controller
 
     public function create(transaction $model)
     {
-        $user = UserInfo::where('flag', '1')->get();
+        $user = User::where('flag', '1')->get();
         $card = card::where('flag', '1')->get();
         $transaction = transaction::where('flag', '1')->get();
-        return view('pages.transactions.transaction', ['transaction' => $model->paginate(15)], compact('user','card'));
-
+        return view('pages.transactions.transaction', ['transaction' => $model->paginate(15)], compact('user', 'card'));
     }
 
     //
@@ -96,7 +92,7 @@ class transactionController extends Controller
     {
         //code
         if (transaction::where('id', $id)->where('flag', '1')->exists()) {
-            $transaction = UserInfo::where(['id'=> $id,'flag' => '1' ] )->get();
+            $transaction = User::where(['id' => $id, 'flag' => '1'])->get();
             return response($transaction, 200);
         } else {
             return response()->json([
@@ -108,13 +104,13 @@ class transactionController extends Controller
     public function edit(Request $request, $id)
     {
         if (transaction::where('id', $id)->exists()) {
-          
-           
-            $transaction= transaction::find($id);
-            $user = UserInfo::where(['flag' => '1', 'id' => $transaction->user_id])->get();
+
+
+            $transaction = transaction::find($id);
+            $user = User::where(['flag' => '1', 'id' => $transaction->user_id])->get();
             $card = Card::where(['flag' => '1', 'id' => $transaction->card_id])->get();
 
-            return view('pages.transactions.transactionEdit', compact('user','card','transaction'));
+            return view('pages.transactions.transactionEdit', compact('user', 'card', 'transaction'));
         }
     }
 
@@ -165,5 +161,3 @@ class transactionController extends Controller
         }
     }
 }
-
- 

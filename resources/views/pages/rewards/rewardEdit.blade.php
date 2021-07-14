@@ -25,7 +25,7 @@
                              <div class="form-group">
                                 <label for="total points">Total Points :</label>
                                 <input type="file" class="form-control" id="image" name="image"  
-                                    placeholder="Update Picture" value="{{ $reward->name }}">
+                                    placeholder="Update Picture" value="{{ $reward->name }}" required>
                             </div>
 
 

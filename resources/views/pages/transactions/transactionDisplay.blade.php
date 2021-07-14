@@ -30,9 +30,9 @@
                                             <th>
                                                 UserName
                                             </th>
-                                            <th>
+                                            {{-- <th>
                                                 CardType
-                                            </th>
+                                            </th> --}}
                                             <th>
                                                 Net Amount
                                             </th>
@@ -58,8 +58,8 @@
                                             <tr>
                                                 <td>{{ ++$key }}</td>
                                                 {{-- <td>{{route('transaction/getUser/'[$transaction->user_id] ) }} </td> --}}
-                                                <td>{{ $transaction->first_name }}</td>
-                                                <td>{{ $transaction->title }}</td>
+                                                <td>{{ $transaction->name }}</td>
+                                                {{-- <td>{{ $transaction->title }}</td> --}}
                                                 <td>{{ $transaction->net_amount }}</td>
                                                 <td>{{ $transaction->earn_points }}</td>
                                                 <td>{{ $transaction->description }}</td>

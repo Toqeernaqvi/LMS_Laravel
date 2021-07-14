@@ -85,6 +85,10 @@ Route::get('/reward', function () {
     return view('pages.rewards.reward');
 })->middleware(['auth'])->name('reward');
 
+// Customer Dashboard
+Route::get('/customerDashboard', function () {
+    return view('customerDashboard');
+})->middleware(['auth'])->name('customerDashboard');
 
 require __DIR__.'/auth.php';
 
@@ -146,4 +150,4 @@ Route::get('transaction/getUser/{id}', [transactionController::class,'getUser' ]
 //Rewards
 Route::resource( 'reward',  rewardController::class);
 
- 
+
