@@ -9,15 +9,15 @@ use App\Models\City;
 use App\Models\Country;
 use App\Models\Organization;
 use App\Models\State;
-use App\Models\UserInfo;
-use App\Models\User;
+ use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Http\Request;
 
 class userInfoController extends Controller
 {
     public function index(User $model)
-    {
+    {   
         // return view('pages.users.user', ['countries' => $model->paginate(15)]);
         try {
             $userInfo = User::where('flag', '1')->get();
@@ -67,9 +67,9 @@ class userInfoController extends Controller
             $user->name = $request->first_name . " ".$request->last_name;
             $user->father_name= $request->father_name;
             $user->cnic= $request->cnic;
-            $user->dob= $request->dob;
+            $user->dob= $request->dob; 
             $user->email= $request->email;
-            $user->password= $request->password;
+            $user->password= Hash::make($request->password);
             $user->phone= $request->phone;
             $user->address= $request->address;
             $user->account_id= $request->account_id; 
@@ -134,7 +134,7 @@ class userInfoController extends Controller
             $user->cnic= is_null($request->cnic)? $user->cnic: $request->cnic;
             $user->dob= is_null($request->dob )?$user->dob :$request->dob;
             $user->email= is_null($request->email)?$user->email:$request->email;
-            $user->password= is_null($request->password)? $user->password : $request->password;
+            $user->password= is_null($request->password)? Hash::make($user->password) :Hash::make($request->password);
             $user->phone= is_null($request->phone)? $user->phone : $request->phone;
             $user->address= is_null($request->address)? $user->address: $request->address;
             $user->account_id= is_null($request->account_id )?$user->account_id: $request->account_id; 

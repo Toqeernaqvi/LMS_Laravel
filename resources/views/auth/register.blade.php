@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'register', 'title' => 'Light Bootstrap Dashboard Laravel by Creative Tim &
+@extends('layouts.app', ['activePage' => 'register', 'title' => 'Loyality Management System by Creative Tim &
 UPDIVISION'])
 
 @section('content')
