@@ -6,6 +6,8 @@ use App\Models\card;
 use App\Models\transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 use DB;
 use Illuminate\Support\Facades\DB as FacadesDB;
 
@@ -35,6 +37,30 @@ class transactionController extends Controller
             return $e->getMessage();
         }
     }
+
+    public function customerTransactionDisplay(transaction $model)
+    {
+        $id = Auth::user()->id;
+         try {
+
+            
+
+            $tran =  FacadesDB::table('transactions')
+                ->join('users', 'users.id' , '=', 'transactions.user_id')
+                //  ->join('cards', 'cards.id', '=', 'transactions.user_id')
+                ->select('transactions.*', 'users.name')
+                ->where([
+                    'transactions.flag' => '1',
+                    'transactions.user_id'=>$id
+                ])->get();
+
+
+            return view('pages.transactions.customerTransactionDisplay', compact( 'tran'));
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
     public function getUser($id)
     {
         $user = User::join('transactions', 'users_info.id', '=', $id)->get(['first_name']);

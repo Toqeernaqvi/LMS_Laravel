@@ -11,6 +11,7 @@ use App\Http\Controllers\cardController;
 use App\Http\Controllers\transactionController;
 use App\Http\Controllers\userInfoController;
 use App\Http\Controllers\rewardController;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Requests\Location\country;
 use Illuminate\Support\Facades\Route;
@@ -84,15 +85,28 @@ Route::get('/transaction', function () {
 Route::get('/reward', function () {
     return view('pages.rewards.reward');
 })->middleware(['auth'])->name('reward');
+Route::get('customerRewardDisplay/getReward/{id}', [rewardController::class, 'getReward']);
 
 // Customer Dashboard
 Route::get('/customerDashboard', function () {
     return view('customerDashboard');
 })->middleware(['auth'])->name('customerDashboard');
 
-require __DIR__.'/auth.php';
 
  
+//Profile Edit
+Route::get('profileEdit', [userInfoController::class, 'profileEdit'])->middleware(['auth'])->name('profileEdit');
+
+//Client Rewards
+Route::get('customerReward', [rewardController::class, 'customerRewardDisplay'])->middleware(['auth'])->name('customerReward');
+require __DIR__ . '/auth.php';
+
+//Customer Transactions
+Route::get('customerTransactions', [TransactionController::class, 'customerTransactionDisplay'])->middleware(['auth'])->name('customerTransactions');
+require __DIR__ . '/auth.php';
+
+
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 // Auth::routes();
@@ -100,54 +114,51 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('dashboard');
 
 Route::group(['middleware' => 'auth'], function () {
-	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
-	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
-	Route::patch('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
-	Route::patch('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
+    Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
+    Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
+    Route::patch('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
+    Route::patch('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
 
 Route::group(['middleware' => 'auth'], function () {
-	Route::get('{page}', ['as' => 'page.index', 'uses' => 'App\Http\Controllers\PageController@index']);
+    Route::get('{page}', ['as' => 'page.index', 'uses' => 'App\Http\Controllers\PageController@index']);
 });
- 
+
 
 // Location Module
-Route::resource( 'country',  countryController::class);
-Route::resource( 'state',  stateController::class);
-Route::get('/getState/{id}', [ stateController::class,'getState' ]);
-Route::get('city/getState/{id}', [ cityController::class,'getState' ]);
-Route::resource( 'city',  cityController::class);
-Route::get('/getCity/{id}', [ cityController::class,'getCity' ]);
-Route::resource( 'area',  areaController::class);
-Route::get('/getArea/{id}', [ areaController::class,'getArea' ]);
-Route::get('area/getArea/{id}', [ areaController::class,'getArea' ]);
+Route::resource('country',  countryController::class);
+Route::resource('state',  stateController::class);
+Route::get('/getState/{id}', [stateController::class, 'getState']);
+Route::get('city/getState/{id}', [cityController::class, 'getState']);
+Route::resource('city',  cityController::class);
+Route::get('/getCity/{id}', [cityController::class, 'getCity']);
+Route::resource('area',  areaController::class);
+Route::get('/getArea/{id}', [areaController::class, 'getArea']);
+Route::get('area/getArea/{id}', [areaController::class, 'getArea']);
 
-Route::get('area/getState/{id}', [ areaController::class,'getState' ]);
-Route::get('area/getCity/{id}', [ areaController::class,'getCity' ]);
+Route::get('area/getState/{id}', [areaController::class, 'getState']);
+Route::get('area/getCity/{id}', [areaController::class, 'getCity']);
 
 //Organizations Module
-Route::resource( 'organization',  organizationController::class);
-Route::resource( 'branch',  branchController::class);
-Route::get('/getBranch/{id}', [ branchController::class,'getBranch' ]);
- 
+Route::resource('organization',  organizationController::class);
+Route::resource('branch',  branchController::class);
+Route::get('/getBranch/{id}', [branchController::class, 'getBranch']);
+
 
 //User Module
-Route::resource( 'account',  accountController::class);
-Route::resource( 'userInfo',  userInfoController::class);
-
-Route::get('userInfo/getState/{id}', [ areaController::class,'getState' ]);
-Route::get('userInfo/getCity/{id}', [ areaController::class,'getCity' ]);
-Route::get('userInfo/getArea/{id}', [ areaController::class,'getArea' ]);
-Route::get('userInfo/getBranch/{id}', [ branchController::class,'getBranch' ]);
+Route::resource('account',  accountController::class);
+Route::resource('userInfo',  userInfoController::class);
+Route::get('userInfo/getState/{id}', [areaController::class, 'getState']);
+Route::get('userInfo/getCity/{id}', [areaController::class, 'getCity']);
+Route::get('userInfo/getArea/{id}', [areaController::class, 'getArea']);
+Route::get('userInfo/getBranch/{id}', [branchController::class, 'getBranch']);
 
 //Cards
-Route::resource( 'card',  cardController::class);
+Route::resource('card',  cardController::class);
 
 //Transactions
-Route::resource( 'transaction',  transactionController::class);
-Route::get('transaction/getUser/{id}', [transactionController::class,'getUser' ]);
+Route::resource('transaction',  transactionController::class);
+Route::get('transaction/getUser/{id}', [transactionController::class, 'getUser']);
 
 //Rewards
-Route::resource( 'reward',  rewardController::class);
-
-
+Route::resource('reward',  rewardController::class);

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\reward;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB as FacadesDB;
+use Illuminate\Support\Facades\Auth;
 
 class rewardController extends Controller
 {
@@ -14,6 +16,30 @@ class rewardController extends Controller
             $reward = reward::where('flag', '1')->get();
 
             return view('pages.rewards.rewardDisplay', compact('reward'));
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+
+    public function customerRewardDisplay(reward $model)
+    {
+        try {
+            $reward = reward::where('flag', '1')->get();
+            $id = Auth::user()->id;
+
+
+
+            $tran =  FacadesDB::table('transactions')
+                ->join('users', 'users.id', '=', 'transactions.user_id')
+                //  ->join('cards', 'cards.id', '=', 'transactions.user_id')
+                ->select('transactions.*', 'users.name')
+                ->where([
+                    'transactions.flag' => '1',
+                    'transactions.user_id' => $id
+                ])->get();
+
+            return view('pages.rewards.customerRewardDisplay', compact('reward', 'tran'));
         } catch (\Exception $e) {
             return $e->getMessage();
         }
@@ -37,7 +63,7 @@ class rewardController extends Controller
 
 
 
-            
+
             $reward = $request->all();
             $reward = new reward();
             //code for image
@@ -49,8 +75,8 @@ class rewardController extends Controller
             ]);
 
             $name = $request->file('image')->getClientOriginalName();
-           
-            $path = $request->file('image')->move(public_path("/uploads"), $name); 
+
+            $path = $request->file('image')->move(public_path("/uploads"), $name);
 
             $reward->name =  $name;
             $reward->path =  $path;
@@ -80,7 +106,18 @@ class rewardController extends Controller
             ], 404);
         }
     }
-
+    public function getRewards($id)
+    {
+        //  logic to get a country here 
+        if (reward::where('id', $id)->where('flag', '1')->exists()) {
+            $reward = reward::where('id', $id)->get();
+            return response($reward, 200);
+        } else {
+            return response()->json([
+                "message" => "Reward not found"
+            ], 404);
+        }
+    }
     public function edit(Request $request, $id)
     {
         if (reward::where('id', $id)->exists()) {
@@ -97,7 +134,7 @@ class rewardController extends Controller
         if (reward::where('id', $id)->exists()) {
             $reward = reward::find($id);
 
-//code for image
+            //code for image
             ///////////
 
             $validatedData = $request->validate([
@@ -106,14 +143,14 @@ class rewardController extends Controller
             ]);
 
             $name = $request->file('image')->getClientOriginalName();
-           
-            $path = $request->file('image')->move(public_path("/uploads"), $name); 
+
+            $path = $request->file('image')->move(public_path("/uploads"), $name);
 
             $reward->name =  $name;
             $reward->path =  $path;
 
             /////////////
-            
+
             $reward->title = is_null($request->title) ? $reward->title : $request->title;
             $reward->total_points = is_null($request->total_points) ? $reward->total_points : $request->total_points;
             $reward->name = is_null($request->name) ? $reward->name : $request->name;

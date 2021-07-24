@@ -21,8 +21,7 @@ Tip 2: you can also add an image using data-image tag
 
             {{-- Profile --}}
             <li class="nav-item @if ($activePage=='profile' ) active @endif">
-                <a class="nav-link" >
-                    {{-- href="{{ route('profile') }}" --}}
+                <a class="nav-link" href="{{url('/profileEdit')}}">
                     <i class="nc-icon nc-chart-pie-35"></i>
                     <p>{{ __('Profile') }}</p>
                 </a>
@@ -30,8 +29,8 @@ Tip 2: you can also add an image using data-image tag
 
             {{-- Rewards --}}
             <li class="nav-item @if ($activePage=='rewards' ) active @endif">
-                <a class="nav-link" >
-                    {{-- href="{{ route('rewards') }}" --}}
+                <a class="nav-link" href="{{url('/customerReward')}}">
+
                     <i class="nc-icon nc-chart-pie-35"></i>
                     <p>{{ __('rewards') }}</p>
                 </a>
@@ -39,8 +38,8 @@ Tip 2: you can also add an image using data-image tag
 
             {{-- Transactions --}}
             <li class="nav-item @if ($activePage=='transaction' ) active @endif">
-                <a class="nav-link" >
-                    {{-- href="{{ route('transaction') }}" --}}
+                <a class="nav-link" href="{{url('/customerTransactions')}}">
+
                     <i class="nc-icon nc-chart-pie-35"></i>
                     <p>{{ __('Transactions history') }}</p>
                 </a>
