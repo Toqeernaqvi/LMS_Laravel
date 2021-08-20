@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\card;
+use App\Models\points_managment;
 use App\Models\transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -100,6 +101,9 @@ class transactionController extends Controller
         //code
         try {
             $transaction = new transaction();
+            $points_management =  new points_managment();
+
+            //Store Transaction
             $transaction->user_id = $request->user_id;
             $transaction->card_id = $request->card_id;
             $transaction->net_amount = $request->net_amount;
@@ -108,6 +112,15 @@ class transactionController extends Controller
             $transaction->status =  "Active";
             $transaction->flag =  "1";
             $transaction->save();
+
+            //Store Points
+            $points_management->user_id = $request->user_id;
+            $points_management->transaction_id =  $transaction->id;
+            $points_management->points =  $request->earn_points;
+            $points_management->type  = "Add";
+            $points_management->status = "Active";
+            $points_management->flag = "1";
+            $points_management->save();
 
             return redirect()->route('transaction.index')->with('success', 'Trasaction added successfully');
         } catch (\Exception $e) {

@@ -8,6 +8,7 @@ use App\Http\Controllers\organizationController;
 use App\Http\Controllers\branchController;
 use App\Http\Controllers\accountController;
 use App\Http\Controllers\cardController;
+use App\Http\Controllers\points_managementController;
 use App\Http\Controllers\transactionController;
 use App\Http\Controllers\userInfoController;
 use App\Http\Controllers\rewardController;
@@ -162,3 +163,10 @@ Route::get('transaction/getUser/{id}', [transactionController::class, 'getUser']
 
 //Rewards
 Route::resource('reward',  rewardController::class);
+
+//Points Management
+ 
+Route::resource('points',  points_managementController::class);
+Route::post('/points_store', [points_managementController::class, 'store']);
+
+Route::get('/getReward/{id}', [rewardController::class, 'getRewards']);

@@ -5,26 +5,6 @@
     <div class="content">
         <div class="container">
             <div class="row">
-                <!-- medium modal -->
-                <div class="modal fade" id="mediumModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body" id="mediumBody">
-                                <div>
-                                    <!-- the result to be displayed apply here -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
 
                 <div class="col-md-12 grid-margin stretch-card">
                     <div class="card">
@@ -52,32 +32,33 @@
                                     <tbody id="content">
                                         @foreach ($reward as $key => $reward)
 
-                                          
-                                              <tr style="display: flex;   flex-flow: row wrap;" >
-                                                 
+
+                                            <tr style="display: flex;   flex-flow: row wrap;">
+
                                                 <td style=""><img src="{{ asset('uploads/' . $reward->name) }}" width="50"
-                                                    height="50" alt="job image" title="job image">
-                                                <h3>{{ $reward->title }}</h3>
-                                                <p><b>Total Points : </b>{{ $reward->total_points }}</p>
+                                                        height="50" alt="job image" title="job image">
+                                                    <h3>{{ $reward->title }}</h3>
+                                                    <p><b>Total Points : </b>{{ $reward->total_points }}</p>
 
 
-                                                @if ($tran->sum('earn_points') >= $reward->total_points)
-                                                    {{-- Display Modal --}}
-                                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                        data-target="#exampleModal" id="btnModal">
-                                                        Avail Offer
-                                                    </button>
+                                                    @if ($tran->sum('earn_points') >= $reward->total_points)
+                                                        {{-- Display Modal --}}
+                                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                            data-target="#exampleModal" id="btnModal"
+                                                            value="{{ $reward->id }}">
+                                                            Avail Offer
+                                                        </button>
 
-                                                @else
+                                                    @else
 
-                                                    <button class="btn btn-dark">
-                                                        Collect more points
-                                                    </button>
-                                                @endif
-                                            </td>
-                                            
-                                           
-                                        
+                                                        <button class="btn btn-dark">
+                                                            Collect more points
+                                                        </button>
+                                                    @endif
+                                                </td>
+
+
+
 
 
 
@@ -91,8 +72,7 @@
                                                                 <p class="modal-title" id="exampleModalLabel">
                                                                     <img src="{{ asset('uploads/cong.jpg') }}" width="50"
                                                                         height="50" alt="job image" title="job image">
-                                                                <h3> Congratulations
-                                                                </h3>
+
 
 
                                                                 </p>
@@ -102,12 +82,14 @@
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <p><b>You Successfully avail this offer.</p>
+                                                                <div id="rewardData"></div>
+                                                                <p><b>Please Confirm to avail this offer!</p>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary"
-                                                                    data-dismiss="modal">Close</button>
-
+                                                                    data-dismiss="modal" id="btnYes">Yes</button>
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal" id="btnNo">No</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -125,7 +107,7 @@
                                             </tr>
 
 
-                                            
+
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -142,26 +124,66 @@
 
     <script type=text/javascript>
         $('#btnModal').click(function() {
-            console.log("modal click");
-            var rewardID = $(this).val();
+
+            var rewardID = $('#btnModal').val();
+            var html = '';
+
             if (rewardID) {
                 $.ajax({
                     type: "GET",
                     url: "getReward/" + $('#btnModal').val(),
 
                     success: function(res) {
+                        console.log(res);
                         if (res) {
-                            $("#exampleModalLabel").empty();
                             $.each(res, function(index) {
-                                console.log(res);
+                                $("#rewardData").empty();
+                                html += '<h3>' + res[index].title + '</h3>';
+                                html += '<p id="total_points">' + res[index].total_points +
+                                    '</p>';
+                                html += '<p hidden id="reward_id">' + res[index].id + '</p>';
 
-                                $("#exampleModalLabel").append('<h3> " ' + res[index].title +
-                                    '</h3>');
 
+                                $("#rewardData").append(html);
                             });
 
                         } else {
-                            $("#state").empty();
+                            $("#rewardData").empty();
+                        }
+                    }
+                });
+            }
+        });
+
+
+        // Minus Points from points Table
+        $('#btnYes').click(function() {
+           
+            var reward_id = $('#reward_id').text();
+            console.log("abc"+reward_id);
+
+            var points = $('#total_points').text();
+            console.log("abc"+points);
+            var type = "Minus";
+
+            if (reward_id) {
+                $.ajax({
+                    url: "/points_store",
+                    type: "POST",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+
+
+                        reward_id: reward_id,
+                        points: points,
+                        type: type
+                    },
+                    success: function(res) {
+                        if (res) {
+                            alert("Congrats");
+
+                        } else {
+                            alert("Some Error 404");
                         }
                     }
                 });
