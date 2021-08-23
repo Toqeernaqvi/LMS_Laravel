@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\points_managment;
 use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Support\Facades\DB;
+
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class points_managementController extends Controller
@@ -26,13 +28,22 @@ class points_managementController extends Controller
     {
         return view('pages.organizations.organization', ['organizations' => $model->paginate(15)]);
     }
-    //
+    
     public function getAllPoints()
     {
-        // logic to get all students
-        $points_management = points_managment::where('flag', '1')->get()->toJson(JSON_PRETTY_PRINT);
-        return response($points_management, 200);
+        $id = auth()->user()->id;
+
+        // logic to get points by user_id
+        $Add_Points = DB::select('(SELECT sum(points) as A FROM points_managment where type = "add" and user_id = ' . $id . ')');
+        $Minus_Points = DB::select('(SELECT sum(points) as B FROM points_managment where type = "Minus" and user_id = ' . $id . ')');
+        $Total_Points = (int)$Add_Points[0]->A - (int)$Minus_Points[0]->B;
+        return response()->json([
+           
+             $Total_Points,
+             ], 200);
     }
+
+
     public function store(Request $request)
     {
         //logic to create a country 
@@ -74,10 +85,10 @@ class points_managementController extends Controller
         }
     }
 
-  
+
     public function update(Request $request, $id)
     {
- 
+
         if (points_managment::where('id', $id)->exists()) {
             $points_management = points_managment::find($id);
 
@@ -98,7 +109,7 @@ class points_managementController extends Controller
 
     public function destroy($id)
     {
- 
+
         if (points_managment::where('id', $id)->exists()) {
 
             $points_management = points_managment::find($id);
@@ -106,7 +117,7 @@ class points_managementController extends Controller
 
             $points_management->save();
             // return redirect()->route('organization.index')->with('success', 'Organization created successfully');
- 
+
         } else {
             return response()->json([
                 "message" => "Organization not found"

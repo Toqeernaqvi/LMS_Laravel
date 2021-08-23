@@ -49,13 +49,16 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="Country">Area Name :</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter Area Name ">
+                            <label for="Area">Area Name :</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter Area Name " data-placement="bottom">
+                            @error('name')
+                                <div style="color: tomato">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="ShortName">ShortName :</label>
                             <input type="text" class="form-control" id="shortName" name="shortName"
-                                placeholder="Enter ShortName ">
+                                placeholder="Enter ShortName " data-placement="bottom">
                         </div>
 
                         <div class="form-group">
@@ -136,6 +139,20 @@
 
             }
         });
-
     </script>
 @endsection
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function() {
+
+        $('#name').tooltip({
+            'trigger': 'focus',
+            'title': 'Enter Area Name like Batapur'
+        });
+        $('#shortName').tooltip({
+            'trigger': 'focus',
+            'title': 'Enter Shortname like bata'
+        });
+    });
+</script>

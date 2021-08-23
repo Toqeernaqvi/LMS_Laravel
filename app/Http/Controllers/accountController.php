@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Users\accountRequest;
 use App\Models\Account;
 use Illuminate\Http\Request;
 
@@ -30,7 +31,7 @@ class accountController extends Controller
         return response($countries, 200);
     }
 
-    public function store( Request $request)
+    public function store(accountRequest $request)
     {
         //logic to create a account 
         try {
@@ -53,12 +54,10 @@ class accountController extends Controller
 
     public function show($id)
     {
-      //  logic to get a account here 
+        //  logic to get a account here 
         if (Account::where('id', $id)->where('flag', '1')->exists()) {
             $account = Account::where('id', $id)->get();
             return response($account, 200);
-
-
         } else {
             return response()->json([
                 "message" => "Account not found"
@@ -92,7 +91,6 @@ class accountController extends Controller
             $account->save();
 
             return redirect()->route('account.index')->with('success', 'Account Updated successfully');
-
         }
     }
 

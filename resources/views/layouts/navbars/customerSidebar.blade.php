@@ -41,7 +41,7 @@ Tip 2: you can also add an image using data-image tag
                 <a class="nav-link" href="{{url('/customerTransactions')}}">
 
                     <i class="nc-icon nc-chart-pie-35"></i>
-                    <p>{{ __('Transactions history') }}</p>
+                    <p>{{ __('Purchase history') }}</p>
                 </a>
             </li>
 

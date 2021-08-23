@@ -87,7 +87,8 @@ Route::get('/reward', function () {
     return view('pages.rewards.reward');
 })->middleware(['auth'])->name('reward');
 Route::get('customerRewardDisplay/getReward/{id}', [rewardController::class, 'getReward']);
-
+Route::get('getAllPoints', [points_managementController::class, 'getAllPoints']);
+ 
 // Customer Dashboard
 Route::get('/customerDashboard', function () {
     return view('customerDashboard');
@@ -168,5 +169,8 @@ Route::resource('reward',  rewardController::class);
  
 Route::resource('points',  points_managementController::class);
 Route::post('/points_store', [points_managementController::class, 'store']);
+Route::get('/getAllPoints', [points_managementController::class, 'getAllPoints']);
+
 
 Route::get('/getReward/{id}', [rewardController::class, 'getRewards']);
+ 

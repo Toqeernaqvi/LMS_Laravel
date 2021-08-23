@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Card\cardRequest;
 use App\Models\card;
 use Illuminate\Http\Request;
 
@@ -10,8 +11,7 @@ class cardController extends Controller
     
         public function index(card $model)
         {
-            // return view('pages.location.country', ['countries' => $model->paginate(15)]);
-            try {
+             try {
                 $card= card::where('flag', '1')->get();
                 return view('pages.cards.cardDisplay', compact('card'));
             } catch (\Exception $e) {
@@ -30,7 +30,7 @@ class cardController extends Controller
             $card = card::where('flag', '1')->get()->toJson(JSON_PRETTY_PRINT);
             return response($card, 200);
         }
-        public function store(Request $request)
+        public function store(cardRequest $request)
         {
             //logic to create a country 
             try {

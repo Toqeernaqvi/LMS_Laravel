@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Location\areaRequest;
+use App\Http\Requests\Location\cityRequest;
 use App\Models\Country;
 use App\Models\State;
 use App\Models\City;
@@ -99,7 +101,7 @@ class areaController extends Controller
         $area= Area::where('flag', '1')->get()->toJson(JSON_PRETTY_PRINT);
         return response($area, 200);
     }
-    public function store(Request $request)
+    public function store(areaRequest $request)
     {
         //code
         try {

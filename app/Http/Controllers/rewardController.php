@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Rewards\rewardRequest;
 use App\Models\reward;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB as FacadesDB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
+use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class rewardController extends Controller
 {
@@ -38,8 +42,10 @@ class rewardController extends Controller
                     'transactions.flag' => '1',
                     'transactions.user_id' => $id
                 ])->get();
-
-            return view('pages.rewards.customerRewardDisplay', compact('reward', 'tran'));
+                $Add_Points = DB::select('(SELECT sum(points) as A FROM points_managment where type = "add" and user_id = ' . $id . ')');
+                $Minus_Points = DB::select('(SELECT sum(points) as B FROM points_managment where type = "Minus" and user_id = ' . $id . ')');
+                $Total_Points = (int)$Add_Points[0]->A - (int)$Minus_Points[0]->B;
+            return view('pages.rewards.customerRewardDisplay', compact('reward', 'tran' ,'Total_Points'));
         } catch (\Exception $e) {
             return $e->getMessage();
         }
@@ -56,19 +62,12 @@ class rewardController extends Controller
         $reward = reward::where('flag', '1')->get()->toJson(JSON_PRETTY_PRINT);
         return response($reward, 200);
     }
-    public function store(Request $request)
+    public function store(rewardRequest $request)
     {
-        //logic to create a country 
+         
         try {
-
-
-
-
-            $reward = $request->all();
+             $reward = $request->all();
             $reward = new reward();
-            //code for image
-            ///////////
-
             $validatedData = $request->validate([
                 'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
 

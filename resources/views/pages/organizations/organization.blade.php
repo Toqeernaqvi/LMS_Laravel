@@ -9,28 +9,28 @@
             <div class="row">
 
                 <div class="container">
-                 
+
 
                     <form method="POST" action="{{ route('organization.store') }}">
                         @csrf
                         <div class="form-group mt-5">
                             <label for="Organization">Organization :</label>
-                            <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp"
-                                placeholder="Enter Organization Name ">
-                                @error('name')
-                                   <div style="color: tomato">{{$message}}</div> 
-                                @enderror
+                            <input type="text" class="form-control" id="name" name="name"
+                                placeholder="Enter Organization Name" data-placement="bottom">
+                            @error('name')
+                                <div style="color: tomato">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="ShortName">ShortName :</label>
-                            <input type="text" class="form-control" id="shortName" name="shortName"
-                                aria-describedby="" placeholder="Enter ShortName ">
+                            <input type="text" class="form-control" id="shortName" name="shortName" aria-describedby=""
+                                placeholder="Enter ShortName " data-placement="bottom">
                         </div>
 
                         <div class="form-group">
                             <label for="Description">Description :</label>
                             <input type="text" class="form-control" id="description" name="description"
-                                aria-describedby="emailHelp" placeholder="Enter Description ">
+                                placeholder="Enter Description ">
                         </div>
 
                         <button type="submit" class="btn btn-primary mt-2">Submit</button>
@@ -52,3 +52,19 @@
     </div>
     </div>
 @endsection
+
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function() {
+
+        $('#name').tooltip({
+            'trigger': 'focus',
+            'title': 'Enter Area Name like Batapur'
+        });
+        $('#shortName').tooltip({
+            'trigger': 'focus',
+            'title': 'Enter Shortname like bata'
+        });
+    });
+</script>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Organizations\organizationRequest;
 use App\Models\Organization;
 use Illuminate\Http\Request;
 
@@ -30,7 +31,7 @@ class organizationController extends Controller
         $organization = Organization::where('flag', '1')->get()->toJson(JSON_PRETTY_PRINT);
         return response($organization, 200);
     }
-    public function store(Request $request)
+    public function store(organizationRequest $request)
     {
         //logic to create a country 
         try {

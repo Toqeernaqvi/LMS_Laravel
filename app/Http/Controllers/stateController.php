@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Country;
  use App\Http\Controllers\DB;
 use App\Http\Controllers\countryController;
+use App\Http\Requests\Location\stateRequest;
 
 class stateController extends Controller
 {
@@ -54,7 +55,8 @@ class stateController extends Controller
         $state = State::where('flag', '1')->get()->toJson(JSON_PRETTY_PRINT);
         return response($state, 200);
     }
-    public function store(Request $request)
+
+    public function store(stateRequest $request)
     {
         //code
         try {

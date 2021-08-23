@@ -50,19 +50,22 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="Country">City Name :</label>
-                                <input type="text" class="form-control" id="title" aria-describedby="emailHelp"
-                                  name="name"  placeholder="Enter City Name ">
+                                <label for="City">City Name :</label>
+                                <input type="text" class="form-control" id="title" 
+                                  name="name"  placeholder="Enter City Name " data-placement="bottom">
+                                  @error('name')
+                                  <div style="color: tomato">{{$message}}</div> 
+                               @enderror
                             </div>
                             <div class="form-group">
                                 <label for="ShortName">ShortName :</label>
-                                <input type="text" class="form-control" id="shortname" aria-describedby="emailHelp"
-                                  name="shortName"  placeholder="Enter ShortName ">
+                                <input type="text" class="form-control" id="shortname" 
+                                  name="shortName"  placeholder="Enter ShortName " data-placement="bottom">
                             </div>
 
                             <div class="form-group">
                                 <label for="Description">Description :</label>
-                                <input type="text" class="form-control" id="shortname" aria-describedby="emailHelp"
+                                <input type="text" class="form-control" id="shortname" 
                                    name="Description"  placeholder="Enter Description ">
                             </div>
 
@@ -117,3 +120,18 @@
         </div>
     </div>
 @endsection
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function() {
+
+        $('#name').tooltip({
+            'trigger': 'focus',
+            'title': 'Enter City Name like Lahore'
+        });
+        $('#shortName').tooltip({
+            'trigger': 'focus',
+            'title': 'Enter Shortname like Lhr'
+        });
+    });
+</script>

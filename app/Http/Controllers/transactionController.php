@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Transactions\transactionRequest;
 use App\Models\card;
 use App\Models\points_managment;
 use App\Models\transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
-use DB;
 use Illuminate\Support\Facades\DB as FacadesDB;
+use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Facades\Auth as FacadesAuth;
 class transactionController extends Controller
 {
 
@@ -31,9 +32,12 @@ class transactionController extends Controller
                 ->where([
                     'transactions.flag' => '1'
                 ])->get();
+                $id = auth()->user()->id;
+                $Add_Points = DB::select('(SELECT sum(points) as A FROM points_managment where type = "add" and user_id = ' . $id . ')');
+                $Minus_Points = DB::select('(SELECT sum(points) as B FROM points_managment where type = "Minus" and user_id = ' . $id . ')');
+                $Total_Points = (int)$Add_Points[0]->A - (int)$Minus_Points[0]->B;
 
-
-            return view('pages.transactions.transactionDisplay', compact( 'tran'));
+            return view('pages.transactions.transactionDisplay', compact( 'tran','Total_Points'));
         } catch (\Exception $e) {
             return $e->getMessage();
         }
@@ -96,7 +100,7 @@ class transactionController extends Controller
         $transaction = transaction::where('flag', '1')->get()->toJson(JSON_PRETTY_PRINT);
         return response($transaction, 200);
     }
-    public function store(Request $request)
+    public function store(transactionRequest $request)
     {
         //code
         try {

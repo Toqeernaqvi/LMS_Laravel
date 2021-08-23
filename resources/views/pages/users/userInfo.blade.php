@@ -11,8 +11,8 @@
                         {{-- First Name --}}
                         <div class="form-group mt-5">
                             <label>First Name :</label>
-                            <input type="text" class="form-control"   name="first_name" 
-                                placeholder="Enter First Name ">
+                            <input type="text" class="form-control"   name="first_name" id="first_name"
+                                placeholder="Enter First Name " data-placement="bottom">
                             @error('first_name')
                                 <div style="color: tomato">{{ $message }}</div>
                             @enderror
@@ -21,8 +21,8 @@
                         {{-- Last Name --}}
                         <div class="form-group mt-5">
                             <label>Last Name :</label>
-                            <input type="text" class="form-control"  name="last_name" 
-                                placeholder="Enter First Name ">
+                            <input type="text" class="form-control"  name="last_name"  id ="last_name"
+                                placeholder="Enter First Name " data-placement="bottom">
                             @error('last_name')
                                 <div style="color: tomato">{{ $message }}</div>
                             @enderror
@@ -30,8 +30,8 @@
                         {{-- Father Name --}}
                         <div class="form-group mt-5">
                             <label>Father Name :</label>
-                            <input type="text" class="form-control"  name="father_name" 
-                                placeholder="Enter Father Name ">
+                            <input type="text" class="form-control"  name="father_name" id="father_name"
+                                placeholder="Enter Father Name " data-placement="bottom">
                             @error('father_name')
                                 <div style="color: tomato">{{ $message }}</div>
                             @enderror
@@ -39,8 +39,8 @@
                         {{-- CNIC --}}
                         <div class="form-group mt-5">
                             <label>CNIC :</label>
-                            <input type="text" class="form-control"  name="cnic" 
-                                placeholder="Enter CNIC XXXXX_XXXXXXX_X">
+                            <input type="text" class="form-control"  name="cnic" id="cnic"
+                                placeholder="Enter CNIC XXXXX_XXXXXXX_X" data-placement="bottom">
                             @error('cnic')
                                 <div style="color: tomato">{{ $message }}</div>
                             @enderror
@@ -48,8 +48,8 @@
                         {{-- DOB --}}
                         <div class="form-group mt-5">
                             <label>DOB :</label>
-                            <input type="date" class="form-control"  name="dob" 
-                                placeholder="Enter DOB ">
+                            <input type="date" class="form-control"  name="dob" id="dob"
+                                placeholder="Enter DOB " data-placement="bottom">
                             @error('dob')
                                 <div style="color: tomato">{{ $message }}</div>
                             @enderror
@@ -59,8 +59,8 @@
                         {{-- Phone --}}
                         <div class="form-group mt-5">
                             <label>Phone :</label>
-                            <input type="text" class="form-control"  name="phone" 
-                                placeholder="Enter phone ">
+                            <input type="text" class="form-control"  name="phone" id="phone"
+                                placeholder="Enter phone " data-placement="bottom">
                             @error('phone')
                                 <div style="color: tomato">{{ $message }}</div>
                             @enderror
@@ -68,8 +68,8 @@
                         {{-- Address --}}
                         <div class="form-group mt-5">
                             <label>Address :</label>
-                            <input type="text" class="form-control"  name="address" 
-                                placeholder="Enter address ">
+                            <input type="text" class="form-control"  name="address" id="address"
+                                placeholder="Enter address " data-placement="bottom">
                             @error('address')
                                 <div style="color: tomato">{{ $message }}</div>
                             @enderror
@@ -185,7 +185,7 @@
                               <label>Password :</label>
                               <br>
                               <input type="password" class="form-control d-inline col-11"   name="password"  
-                                  placeholder="Enter Password "  >  
+                                  placeholder="Enter Password " data-placement="bottom" >  
                                   <div class="input-group-addon d-inline">
                                       <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
                                     </div>
@@ -361,3 +361,38 @@
 
     </script>
 @endsection
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function() {
+
+        $('#first_name').tooltip({
+            'trigger': 'focus',
+            'title': 'Enter Your First Name like Syed'
+        });
+        $('#last_name').tooltip({
+            'trigger': 'focus',
+            'title': 'Enter Your Last Name like Abbas'
+        });
+        $('#father_name').tooltip({
+            'trigger': 'focus',
+            // 'title': 'Enter Shortname like Pak'
+        });
+        $('#cnic').tooltip({
+            'trigger': 'focus',
+            'title': 'Enter your cnic no like xxxxx-xxxxxxx-x'
+        });
+        $('#dob').tooltip({
+            'trigger': 'focus',
+            'title': 'Choose your DOB xx-xx-xxxx'
+        });
+        $('#phone').tooltip({
+            'trigger': 'focus',
+            'title': 'Enter your phone no. like +92xx-xxxxxxx'
+        });
+        $('#address').tooltip({
+            'trigger': 'focus',
+            'title': 'Enter your adress like australia 32D-Street sydeney....'
+        });
+    });
+</script>

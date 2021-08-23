@@ -1,7 +1,6 @@
 @extends('layouts.customerApp', ['activePage' => 'rewards', 'navName' => 'rewards' ,'title' => 'toqeer abbas',
 'activeButton' => 'Rewards'])
-
-@section('content')
+ @section('content')
     <div class="content">
         <div class="container">
             <div class="row">
@@ -13,7 +12,7 @@
                             <h6 class="card-title">Rewards</h6>
                             <p class="card-description">All the rewards are listed here. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <button class="btn btn-primary">
-                                    <b>Your Points : </b> {{ $tran->sum('earn_points') }}
+                                    <b>Your Points : </b> {{ $Total_Points }}
                                 </button>
                             </p>
 
@@ -24,10 +23,7 @@
                                             <th>
                                                 Reward
                                             </th>
-
-
-
-                                        </tr>
+   </tr>
                                     </thead>
                                     <tbody id="content">
                                         @foreach ($reward as $key => $reward)
@@ -41,7 +37,7 @@
                                                     <p><b>Total Points : </b>{{ $reward->total_points }}</p>
 
 
-                                                    @if ($tran->sum('earn_points') >= $reward->total_points)
+                                                    @if ($Total_Points >= $reward->total_points)
                                                         {{-- Display Modal --}}
                                                         <button type="button" class="btn btn-primary" data-toggle="modal"
                                                             data-target="#exampleModal" id="btnModal"
@@ -57,12 +53,7 @@
                                                     @endif
                                                 </td>
 
-
-
-
-
-
-
+ 
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="exampleModal" role="dialog"
                                                     aria-labelledby="exampleModalLabel" aria-hidden="true">

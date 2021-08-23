@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Http\Requests\Organizations\branchRequest;
 use App\Models\Branch;
 use App\Models\Organization;
 use Illuminate\Http\Request;
@@ -51,7 +53,7 @@ class branchController extends Controller
         $branch = Branch::where('flag', '1')->get()->toJson(JSON_PRETTY_PRINT);
         return response($branch, 200);
     }
-    public function store(Request $request)
+    public function store(branchRequest $request)
     {
         //code
         try {

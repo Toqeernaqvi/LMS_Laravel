@@ -22,7 +22,7 @@
                     <div class="container mt-5">
                         <form method="POST" action="{{ route('state.store') }}">
                             @csrf
-                            <div  class="form-group mt-5 w-50">
+                            <div class="form-group mt-5 w-50">
                                 <label for="inputState">Select Country</label>
                                 <select id="country_id" name="country_id" class="form-control">
                                     @foreach ($country as $country)
@@ -35,14 +35,17 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="Country">State :</label>
-                                <input type="text" class="form-control" id="name" name="name" aria-describedby=""
-                                    placeholder="Enter Country Name ">
+                                <label for="State">State :</label>
+                                <input type="text" class="form-control" id="name" name="name" 
+                                    placeholder="Enter State Name " data-placement="bottom">
+                                @error('name')
+                                    <div style="color: tomato">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="ShortName">ShortName :</label>
                                 <input type="text" class="form-control" id="shortName" name="shortName"
-                                    aria-describedby="emailHelp" placeholder="Enter ShortName ">
+                                    aria-describedby="emailHelp" placeholder="Enter ShortName " data-placement="bottom">
                             </div>
 
                             <div class="form-group">
@@ -70,3 +73,18 @@
         </div>
     </div>
 @endsection
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function() {
+
+        $('#name').tooltip({
+            'trigger': 'focus',
+            'title': 'Enter State Name like Punjab'
+        });
+        $('#shortName').tooltip({
+            'trigger': 'focus',
+            'title': 'Enter Shortname like pun'
+        });
+    });
+</script>

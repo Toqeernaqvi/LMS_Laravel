@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Location\cityRequest;
 use App\Models\Country;
 use App\Models\State;
 use App\Models\City;
@@ -82,7 +83,7 @@ class cityController extends Controller
         $city = City::where('flag', '1')->get()->toJson(JSON_PRETTY_PRINT);
         return response($city, 200);
     }
-    public function store(Request $request)
+    public function store(cityRequest $request)
     {
         //code
         try {
