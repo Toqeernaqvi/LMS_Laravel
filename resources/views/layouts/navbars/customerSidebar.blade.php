@@ -14,7 +14,7 @@ Tip 2: you can also add an image using data-image tag
             {{-- Dashboard --}}
             <li class="nav-item @if ($activePage=='dashboard' ) active @endif">
                 <a class="nav-link" href="{{ route('customerDashboard') }}">
-                    <i class="nc-icon nc-chart-pie-35"></i>
+                    <i class="nc-icon nc-bank"></i>
                     <p>{{ __('Dashboard') }}</p>
                 </a>
             </li>
@@ -22,7 +22,7 @@ Tip 2: you can also add an image using data-image tag
             {{-- Profile --}}
             <li class="nav-item @if ($activePage=='profile' ) active @endif">
                 <a class="nav-link" href="{{url('/profileEdit')}}">
-                    <i class="nc-icon nc-chart-pie-35"></i>
+                    <i class="nc-icon nc-circle-09"></i>
                     <p>{{ __('Profile') }}</p>
                 </a>
             </li>
@@ -31,7 +31,7 @@ Tip 2: you can also add an image using data-image tag
             <li class="nav-item @if ($activePage=='rewards' ) active @endif">
                 <a class="nav-link" href="{{url('/customerReward')}}">
 
-                    <i class="nc-icon nc-chart-pie-35"></i>
+                    <i class="nc-icon nc-delivery-fast"></i>
                     <p>{{ __('rewards') }}</p>
                 </a>
             </li>
@@ -40,7 +40,7 @@ Tip 2: you can also add an image using data-image tag
             <li class="nav-item @if ($activePage=='transaction' ) active @endif">
                 <a class="nav-link" href="{{url('/customerTransactions')}}">
 
-                    <i class="nc-icon nc-chart-pie-35"></i>
+                    <i class="nc-icon nc-credit-card"></i>
                     <p>{{ __('Purchase history') }}</p>
                 </a>
             </li>

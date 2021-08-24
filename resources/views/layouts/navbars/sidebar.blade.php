@@ -13,7 +13,7 @@ Tip 2: you can also add an image using data-image tag
         <ul class="nav">
             <li class="nav-item @if($activePage == 'dashboard') active @endif">
                 <a class="nav-link" href="{{route('dashboard')}}">
-                    <i class="nc-icon nc-chart-pie-35"></i>
+                    <i class="nc-icon nc-bank"></i>
                     <p>{{ __("Dashboard") }}</p>
                 </a>
             </li>
@@ -95,7 +95,9 @@ Tip 2: you can also add an image using data-image tag
 
 <li class="nav-item">
     <a class="nav-link" data-toggle="collapse" href="#organization" @if($activeButton =='organization') aria-expanded="true" @endif>
-        <i class="nc-icon nc-bank">
+        <i class="nc-icon nc-grid-45
+
+        ">
             {{-- <img src="{{ asset('light-bootstrap/img/laravel.svg') }}" style="width:25px"> --}}
         </i>
         <p>
@@ -127,21 +129,21 @@ Tip 2: you can also add an image using data-image tag
 
 <li class="nav-item @if($activePage == 'cards') active @endif">
     <a class="nav-link" href="{{url('/card')}}">  
-        <i class="nc-icon nc-notes"></i>
+        <i class="nc-icon nc-badge "></i>
         <p>{{ __("Cards") }}</p>
     </a>
 </li>
 
 <li class="nav-item @if($activePage == 'transactions') active @endif">
     <a class="nav-link" href="{{url('/transaction')}}">
-        <i class="nc-icon nc-paper-2"></i>
+        <i class="nc-icon  nc-credit-card"></i>
         <p>{{ __("Add Transactions") }}</p>
     </a>
 </li>
 
 <li class="nav-item @if($activePage == 'rewards') active @endif">
     <a class="nav-link" href="{{url('/reward')}}">
-        <i class="nc-icon nc-paper-2"></i>
+        <i class="nc-icon nc-delivery-fast"></i>
         <p>{{ __("Manage Rewards") }}</p>
     </a>
 </li>

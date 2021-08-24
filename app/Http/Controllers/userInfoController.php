@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Users\userInfoRequest;
 use App\Models\Account;
 use App\Models\Area;
 use App\Models\Branch;
@@ -56,7 +57,7 @@ class userInfoController extends Controller
         return response($users, 200);
     }
 
-    public function store(Request $request)
+    public function store(userInfoRequest $request)
     {
         //logic to create a user 
         try {
